@@ -37,6 +37,7 @@ body {
 
 .mainBox span {
     font-size: 30px;
+    text-align: center;
 }
 
 .answersBox {
