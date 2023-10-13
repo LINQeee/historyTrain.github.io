@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --progress-bar-size: 200px;
+    --progress-bar-stroke-width: 1.8;
+    --button-background: rgba(255, 255, 255, 0.25);
+    --button-hover-background: rgba(255, 255, 255, 0.15);
+}
+
+body {
+    margin: 0;
+    display: flex;
+    width: 100dvw;
+    height: 100dvh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(45deg, #003366, #663399) no-repeat;
+    background-size: contain;
+    color: #fff;
+    overflow: hidden;
+}
+
+.mainBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    transition: all 0.4s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mainBox span {
+    font-size: 30px;
+}
+
+.answersBox {
+    width: 95%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    padding: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.answersBox button {
+    font-family: 'Montserrat', sans-serif;
+    min-width: 100%;
+    text-align: start;
+    font-size: 20px;
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: var(--button-background);
+    transition: all 0.35s ease;
+    cursor: pointer;
+}
+
+.answersBox button:hover {
+    background: var(--button-hover-background);
+}
+
+#progress {
+    position: absolute;
+    font-size: calc(var(--progress-bar-size)*0.15);
+    transition: all 0.2s ease;
+}
+
+svg {
+    height: var(--progress-bar-size);
+    transform: rotate(-90deg);
+    width: var(--progress-bar-size);
+}
+
+.progress-bar__background {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-width: var(--progress-bar-stroke-width);
+}
+
+.progress-bar__progress {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke: #9841f5;
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    stroke-width: calc(var(--progress-bar-stroke-width) + 0.02);
+    transition: stroke-dashoffset 1s ease-in-out;
+}
+
+#progressBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    scale: 1 0;
+    opacity: 0;
+    height: 0;
+    transition: all 0.15s ease;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+
+.resultCountBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    gap: 10px;
+}
+
+.resultCountBox:first-child i {
+    color: rgb(86, 211, 93);
+}
+
+.resultCountBox:last-child i {
+    color: rgb(255, 108, 108);
+}
+
+.resultBox button {
+    width: 300px;
+    border: none;
+    outline: none;
+    height: 40px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.25);
+    font-size: 20px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.resultBox button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}

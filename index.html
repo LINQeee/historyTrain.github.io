@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/acaa438d26.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="adaptiveStyles.css">
+</head>
+<body>
+<div id="progressBar" data-pct="100">
+    <span id="progress">0 / 65</span>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="-1 -1 34 34">
+
+        <circle cx="16" cy="16" r="15.9155"
+                class="progress-bar__background"/>
+
+        <circle cx="16" cy="16" r="15.9155"
+                class="progress-bar__progress
+                 js-progress-bar"/>
+    </svg>
+</div>
+<div class="resultBox">
+    <div class="stats">
+        <div class="resultCountBox">
+            <span id="correct">6</span>
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="resultCountBox">
+            <span id="wrong">6</span>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </div>
+    <button onclick="location.reload()">пройти ещё раз</button>
+</div>
+<div class="mainBox">
+    <span id="question">Аболиционизм - это...</span>
+    <div class="answersBox">
+        <button onclick="checkAnswer(this)">социальное течение, которое выступало за уничтожение всякой государственной
+            власти
+        </button>
+        <button onclick="checkAnswer(this)">общественное движение и система взглядов, направленные против церкви и её
+            господствующей роли в
+            обществе
+        </button>
+        <button onclick="checkAnswer(this)">одна из форм национальных и религиозных предрассудков и нетерпимости,
+            выражающаяся во враждебном
+            отношении к евреям
+        </button>
+        <button onclick="checkAnswer(this)">движение за отмену рабства негров</button>
+    </div>
+</div>
+
+<script src="logic.js"></script>
+</body>
+</html>
