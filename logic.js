@@ -13,6 +13,37 @@ let correctCount = 0;
 
 let wrongCount = 0;
 
+let allDates = [
+    new Term("1799 — 1804 гг.", "период консульства во Франции"),
+    new Term("1804 г.", "издание Гражданского кодекса Наполеона"),
+    new Term("1804 — 1814 гг.", "Первая империя во Франции"),
+    new Term("1810 — 1826 гг.", "войны за независимость испанских колоний в Латинской Америке"),
+    new Term("1812 г., июнь", "вторжение армии Наполеона I в Россию"),
+    new Term("1814 г.", "реставрация Бурбонов, отречение Наполеона I, его ссылка на остров Эльба"),
+    new Term("1814 — 1815 гг.", "Венский конгресс"),
+    new Term("1815 г.", "договор о создании Священного союза"),
+    new Term("1823 г.", "принятие доктрины Монро в США"),
+    new Term("1837 — 1901 гг.", "правление королевы Виктории в Великобритании"),
+    new Term("1836 — 1848 гг.", "чартистское движение в Великобритании"),
+    new Term("1848 — 1849 гг.", "революции в странах Западной Европы («весна народов»)"),
+    new Term("1848 г.", "установление Второй республики во Франции"),
+    new Term("1852 — 1870 гг.", "Вторая империя во Франции"),
+    new Term("1854 г.", "насильственное «открытие» Японии"),
+    new Term("1859 г.", "восстание аболиционистов под руководством Джона Брауна в США"),
+    new Term("1861 г., 17 марта", "образование Итальянского королевства"),
+    new Term("1861 — 1865 гг.", "Гражданская война в США"),
+    new Term("1863 г., 1 января", "отмена рабства в южных штатах США"),
+    new Term("1864 г.", "создание Международного товарищества рабочих (I Интернационал)"),
+    new Term("1868 г.", "«революция Мэйдзи» в Японии"),
+    new Term("1870 — 1871 гг.", "Франко-прусская война"),
+    new Term("1870 г., 2 — 4 сентября", "падение Второй империи и создание Третьей республики во Франции"),
+    new Term("1871 г.", "образование Германской империи"),
+    new Term("1882 г.", "создание Тройственного союза Германии, Австро-Венгрии и Италии"),
+    new Term("1885 г.", "основание Индийского национального конгресса"),
+    new Term("1889 г.", "проведение Международного социалистического конгресса в Париже и создание II Интернационала"),
+    new Term("1892 г.", "подписание русско-французской военной конвенции"),
+    new Term("1904 — 1907 гг.", "создание Антанты — военного союза Великобритании, Франции и России")
+];
 let allTerms = [
     new Term("Аболиционизм", "движение за отмену рабства негров"),
     new Term("Анархизм", "социальное течение, которое выступало за уничтожение всякой государственной власти"),
@@ -80,37 +111,53 @@ let allTerms = [
     new Term("Юнкер", "в бывшей Пруссии - дворянин-землевладелец, помещик"),
     new Term("Ямато", "древнее название Японии")
 ];
-let sessionTerms = allTerms.slice();
+let allCurrentTerms;
+let sessionTerms;
+let maxCount;
 
-$(async function () {
+async function pickMode(button){
+    if ($(button).attr("data-mode") === "dates"){
+        allCurrentTerms = allDates;
+        maxCount = 29;
+    }
+    else {
+        allCurrentTerms = allTerms;
+        maxCount = 65;
+    }
+    sessionTerms = allCurrentTerms.slice();
     await generateQuestion();
-});
+    $(".choiceBox").css({
+       display: "none",
+    });
+    $(".mainBox").css({
+        display: "flex"
+    });
+    $("#progressBar").css({
+       display: "flex",
+    });
+}
 
 async function finishQuiz() {
     $("#correct").text(correctCount);
     $("#wrong").text(wrongCount);
     $(".mainBox").css({
-        opacity: "0",
-        scale: "0"
+        display: "none"
     });
     await sleep(200);
     $("#progress").css("opacity", "0");
     await sleep(200);
-    $("#progress").text(correctCount + " / 65");
+    $("#progress").text(correctCount + " / "+maxCount);
     $("#progress").css("opacity", "1");
-    let percents = 100 - correctCount / 65 * 100;
+    let percents = 100 - correctCount / maxCount * 100;
     $(".progress-bar__progress").css("stroke-dashoffset", percents);
     $(".resultBox").css({
-        scale: "1",
-        opacity: "1",
-        margin: "5% 0 -11% 0",
-        height: "initial"
+        display: "flex"
     });
 }
 
 async function generateQuestion() {
     await changeProgress();
-    if (questionCount >= 66) {
+    if (questionCount >= maxCount+1) {
         await finishQuiz();
         return;
     }
@@ -131,10 +178,10 @@ async function generateQuestion() {
         } else {
             let random;
             do {
-                random = getRandomInt(allTerms.length);
+                random = getRandomInt(allCurrentTerms.length);
             }
-            while (allTerms[random].description === currentTerm.description);
-            $(".answersBox").children().eq(i).text(allTerms[random].description);
+            while (allCurrentTerms[random].description === currentTerm.description);
+            $(".answersBox").children().eq(i).text(allCurrentTerms[random].description);
         }
     }
 
@@ -145,17 +192,17 @@ async function generateQuestion() {
 async function changeProgress() {
     if (questionCount === undefined) {
         questionCount = 1;
-        $("#progress").text("1 / 65");
+        $("#progress").text("1 / "+maxCount);
     } else {
         questionCount++;
         $("#progress").css("opacity", "0");
         await sleep(200);
-        $("#progress").text(questionCount + " / 65");
+        $("#progress").text(questionCount + " / "+maxCount);
         $("#progress").css("opacity", "1");
     }
 
 
-    let percents = 100 - questionCount / 65 * 100;
+    let percents = 100 - questionCount / maxCount * 100;
     $(".progress-bar__progress").css("stroke-dashoffset", percents);
 }
 
